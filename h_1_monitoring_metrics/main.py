@@ -24,7 +24,20 @@ def compute_reg(y_true, y_pred):
     return [("mae", round(mae,4)), ("rmse", round(rmse,4))]
 
 def compute_ranking(y_true, y_pred):
-    pass
+    sorted_relevance = sorted(zip(y_pred, y_true), key=lambda x:x[0], reverse=True)
+    sorted_relevance = [item[1] for item in sorted_relevance]
+    top_3 = sorted_relevance[:3]
+
+    relevant_top_3 = sum(top_3)
+    prec = relevant_top_3/3.0
+
+    total_relevant = sum(y_true)
+    if total_relevant==0:
+        recall = 0.0
+    else:
+        recall = relevant_top_3/total_relevant
+
+    return sorted([("precision_at_3", float(prec)), ("recall_at_3", float(recall))])
 
 def compute_monitoring_metrics(system_type, y_true, y_pred):
     """

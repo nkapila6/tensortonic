@@ -17,9 +17,11 @@ def compute_clf(y_true, y_pred):
     return [("accuracy", acc), ("f1", f1), ("precision", prec), ("recall", recall)]
 
 def compute_reg(y_true, y_pred):
-    mae = 
+    n = len(y_true)
+    mae = 1/n * sum([abs(yt-yp) for (yt,yp) in zip(y_true, y_pred)])
+    rmse =(1/n * sum([abs(yt-yp)**2 for (yt,yp) in zip(y_true, y_pred)]))**0.5
 
-    pass
+    return [("mae", round(mae,4)), ("rmse", round(rmse,4))]
 
 def compute_ranking(y_true, y_pred):
     pass
